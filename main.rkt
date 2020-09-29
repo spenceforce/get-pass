@@ -34,6 +34,9 @@
                   #:out [out (current-output-port)])
   ;; Utility to get passwords from the command line without echoing input.
   (define fd (unsafe-port->file-descriptor in))
+  (unless fd
+    (error "Could not get file descriptor for #:in" 'in))
+
   (define-values (ret-val termios) (tcgetattr fd))
 
   (display prompt out)
